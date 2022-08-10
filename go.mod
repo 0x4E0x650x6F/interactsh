@@ -20,6 +20,7 @@ require (
 	github.com/karlseguin/ccache/v2 v2.0.8
 	github.com/klauspost/compress v1.13.6
 	github.com/kr/pretty v0.3.0 // indirect
+	github.com/martinlindhe/base36 v1.1.1
 	github.com/miekg/dns v1.1.43
 	github.com/onsi/gomega v1.12.0 // indirect
 	github.com/pkg/errors v0.9.1

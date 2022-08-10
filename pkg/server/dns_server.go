@@ -2,13 +2,15 @@ package server
 
 import (
 	"bytes"
-	"net"
-	"strings"
-	"time"
-
+	"encoding/binary"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/martinlindhe/base36"
 	"github.com/miekg/dns"
 	"github.com/projectdiscovery/gologger"
+	"net"
+	"regexp"
+	"strings"
+	"time"
 )
 
 // DNSServer is a DNS server instance that listens on port 53.
@@ -50,6 +52,10 @@ func (h *DNSServer) ListenAndServe() {
 		gologger.Error().Msgf("Could not serve dns on port 53: %s\n", err)
 	}
 }
+
+var (
+	base36Pattern = regexp.MustCompile(`(^|\.)([a-z0-9]{1,7})`)
+)
 
 // ServeDNS is the default handler for DNS queries.
 func (h *DNSServer) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
@@ -104,6 +110,8 @@ func (h *DNSServer) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 			handleClould(net.ParseIP("100.100.100.200"))
 		case strings.EqualFold(domain, "app"+h.dotDomain):
 			handleAppWithCname("projectdiscovery.github.io", net.ParseIP("185.199.108.153"), net.ParseIP("185.199.110.153"), net.ParseIP("185.199.111.153"), net.ParseIP("185.199.108.153"))
+		case isWildcard(domain, h.dotDomain):
+			handleClould(decodeWildcard(domain, h.ipAddress))
 		default:
 			handleClould(h.ipAddress)
 		}
@@ -206,4 +214,41 @@ func toQType(ttype uint16) (rtype string) {
 		rtype = "AAAA"
 	}
 	return
+}
+
+// name to check if starts with a base36 prefix
+func isWildcard(name string, domain string) bool {
+	ipStr := base36Pattern.FindString(name)
+	if dns.IsSubDomain(domain, name) && ipStr != "" {
+		return true
+	}
+	return false
+}
+
+func int2ip(ip uint64) net.IP {
+	ipv4 := make(net.IP, 4)
+	binary.BigEndian.PutUint32(ipv4, uint32(ip))
+	return ipv4
+}
+
+func b36Decode(str string) net.IP {
+	var b36ip = base36.Decode(str)
+	var res = int2ip(b36ip)
+	return res
+}
+
+/*
+this decodes the prefix subdomain, if successful and it is a valid private ip
+then returns that ipv4 otherwise will return the root.
+*/
+
+func decodeWildcard(name string, root net.IP) net.IP {
+	if ipStr := base36Pattern.FindString(name); ipStr != "" {
+		ipv4 := b36Decode(ipStr)
+		if ipv4.IsPrivate() {
+			return ipv4
+		}
+	}
+	gologger.Warning().Msgf("Invalid wildcard: %s\n", name)
+	return root
 }
