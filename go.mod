@@ -45,4 +45,4 @@ require (
 	gopkg.in/corvus-ch/zbase32.v1 v1.0.0
 )
 
-replace github.com/projectdiscovery/interactsh => github.com/0x4E0x650x6F/interactsh v0.0.8-0.20220812142418-98a31aea0ca9
+replace github.com/projectdiscovery/interactsh/pkg/server => github.com/0x4E0x650x6F/interactsh/pkg/server v0.0.8-0.20220812142418-98a31aea0ca9
