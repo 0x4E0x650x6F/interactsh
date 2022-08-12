@@ -1,4 +1,4 @@
-module github.com/0x4E0x650x6F/interactsh
+module github.com/projectdiscovery/interactsh
 
 go 1.15
 
@@ -19,6 +19,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/karlseguin/ccache/v2 v2.0.8
 	github.com/klauspost/compress v1.15.8
+	github.com/kr/pretty v0.3.0 // indirect
 	github.com/martinlindhe/base36 v1.1.1
 	github.com/miekg/dns v1.1.50
 	github.com/onsi/gomega v1.12.0 // indirect
@@ -27,17 +28,21 @@ require (
 	github.com/projectdiscovery/fileutil v0.0.0-20220506114156-c4ab20801483
 	github.com/projectdiscovery/gologger v1.1.4
 	github.com/projectdiscovery/hmap v0.0.2-0.20210825180603-fca7166c158f // indirect
-	github.com/projectdiscovery/interactsh v1.0.6
+	github.com/projectdiscovery/mapcidr v0.0.8 // indirect
 	github.com/projectdiscovery/retryabledns v1.0.13
 	github.com/projectdiscovery/retryablehttp-go v1.0.3-0.20220506110515-811d938bd26d
 	github.com/projectdiscovery/stringsutil v0.0.0-20220422150559-b54fb5dc6833
 	github.com/remeh/sizedwaitgroup v1.0.0
+	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/rs/xid v1.4.0
 	github.com/stretchr/testify v1.8.0
 	go.etcd.io/bbolt v1.3.6 // indirect
 	golang.org/x/exp v0.0.0-20210826195003-46c773283d9d // indirect
+	golang.org/x/net v0.0.0-20210825183410-e898025ed96a // indirect
+	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
+	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/corvus-ch/zbase32.v1 v1.0.0
 )
 
-replace github.com/projectdiscovery/interactsh v0.0.7 => github.com/0x4E0x650x6F/interactsh v0.6.7
+replace github.com/projectdiscovery/interactsh => github.com/0x4E0x650x6F/interactsh v0.0.8-0.20220810161238-3f96fd061a09
