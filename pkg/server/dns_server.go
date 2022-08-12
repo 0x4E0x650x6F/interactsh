@@ -111,6 +111,7 @@ func (h *DNSServer) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 		case strings.EqualFold(domain, "app"+h.dotDomain):
 			handleAppWithCname("projectdiscovery.github.io", net.ParseIP("185.199.108.153"), net.ParseIP("185.199.110.153"), net.ParseIP("185.199.111.153"), net.ParseIP("185.199.108.153"))
 		case isWildcard(domain, h.dotDomain):
+			gologger.Info().Msgf("HELLO!\n")
 			handleClould(decodeWildcard(domain, h.ipAddress))
 		default:
 			handleClould(h.ipAddress)
