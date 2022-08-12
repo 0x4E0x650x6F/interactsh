@@ -44,5 +44,3 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/corvus-ch/zbase32.v1 v1.0.0
 )
-
-replace github.com/projectdiscovery/interactsh/pkg/server => github.com/0x4E0x650x6F/interactsh/pkg/server v0.1.7
