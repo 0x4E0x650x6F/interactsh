@@ -69,7 +69,7 @@ func (h *DNSServer) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 	}
 	requestMsg := r.String()
 
-	gologger.Debug().Msgf("New DNS request: %s\n", requestMsg)
+	gologger.Debug().Msgf("New DNS request: hello %s\n", requestMsg)
 	domain := m.Question[0].Name
 
 	var uniqueID, fullID string
@@ -110,8 +110,7 @@ func (h *DNSServer) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 			handleClould(net.ParseIP("100.100.100.200"))
 		case strings.EqualFold(domain, "app"+h.dotDomain):
 			handleAppWithCname("projectdiscovery.github.io", net.ParseIP("185.199.108.153"), net.ParseIP("185.199.110.153"), net.ParseIP("185.199.111.153"), net.ParseIP("185.199.108.153"))
-		case isWildcard(domain, h.dotDomain):
-			gologger.Info().Msgf("HELLO!\n")
+		case isWildcard(domain, h.dotDomain[1:]):
 			handleClould(decodeWildcard(domain, h.ipAddress))
 		default:
 			handleClould(h.ipAddress)
@@ -244,6 +243,7 @@ then returns that ipv4 otherwise will return the root.
 */
 
 func decodeWildcard(name string, root net.IP) net.IP {
+	gologger.Warning().Msgf("decoding wildcard: %s\n", name)
 	if ipStr := base36Pattern.FindString(name); ipStr != "" {
 		ipv4 := b36Decode(ipStr)
 		if ipv4.IsPrivate() {
