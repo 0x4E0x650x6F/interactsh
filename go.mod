@@ -62,4 +62,4 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-replace github.com/projectdiscovery/interactsh/pkg/server v1.0.6 => github.com/projectdiscovery/interactsh/pkg/server v1.0.6
+replace github.com/projectdiscovery/interactsh/pkg/server v1.0.6 => github.com/0x4E0x650x6F/interactsh/pkg/server v1.0.6
